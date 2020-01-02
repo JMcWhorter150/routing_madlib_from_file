@@ -8,8 +8,11 @@ const server = http.createServer((req, res) => {
         'Content-Type':'text/html'
     })
 
-    const reqUrl = req.url.slice(1);
-    let content = madlib.replace("***NAME***", reqUrl);
+    const reqUrl = req.url.split('/');
+    let content = madlib.replace("***NAME***", reqUrl[1]);
+    if (reqUrl.length === 3) {
+        content = content.replace("***PLACE***", reqUrl[2]);
+    }
     res.end(content);
 });
 
